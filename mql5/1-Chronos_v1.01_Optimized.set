@@ -1,0 +1,76 @@
+;+------------------------------------------------------------------+
+;|                                      1-Chronos_v1.01_Optimized.set |
+;|              Chronos Institutional Donchian Breakout Engine     |
+;|                 Calibrated for XAUUSD (Gold) M15 Timeframe      |
+;|            [Optimized Architecture: High-Yield, High-Frequency] |
+;+------------------------------------------------------------------+
+
+;=== 1. PRESET & PROFILE SELECTION ===
+; 0=Scalper, 1=Swinger, 2=Positive RR, 3=Prop Scalper, 4=Custom Profile
+inp_Profile=4
+
+;=== 2. CUSTOM DONCHIAN & M15 PROFILE SETTINGS ===
+; Period 36 on M15 = 9-Hour Institutional Session Cycle (Filters micro-chop while maintaining high order frequency)
+inp_CustomTimeframe=15
+inp_CustomPeriod=36
+inp_CustomExpiryHours=6
+inp_CustomTPPoints=2500.00000000
+; Tightened to 200 pts ($2.00) based on MAE proof: losing breakouts never recover past -10 MAE
+inp_CustomSLPoints=200.00000000
+; Trailing starts at +180 pts ($1.80) profit, locking in +80 pts profit immediately
+inp_CustomTrailStartPoints=180.00000000
+; Relaxed to 100 pts ($1.00) distance to give Gold breathing room against normal 1-minute candle noise
+inp_CustomTrailDistPoints=100.00000000
+; Set to 0.0: Triggers strictly on real boundary breakout, eliminating dangerous early front-running inside the box
+inp_CustomEntryOffsetPoints=0.00000000
+; 180s pause to prevent revenge churn on identical breakout spikes
+inp_CustomPauseSeconds=180
+; Disabled prop 2x wide SL multiplier to enforce strict risk discipline
+inp_CustomIsPropMode=false
+inp_CustomPropHoldSeconds=0
+inp_CustomPropMultiplier=1.00000000
+
+;=== 3. EXECUTION & ORDER GUARDS ===
+inp_MagicNumber=20261002
+inp_TradeComment=CHRONOS_OPT
+inp_TriggerDistancePoints=50.00000000
+inp_DuplicateBandPoints=400.00000000
+inp_MaxSpreadPoints=60.00000000
+inp_UseNewBarFilter=true
+inp_StickyAlternateLock=true
+
+;=== 4. MONEY MANAGEMENT & RISK DEFENSE ===
+; 0=Fixed Lot, 1=Dynamic Risk Percentage
+inp_LotMode=1
+inp_FixedLot=0.01000000
+inp_RiskPercent=2.00000000
+inp_DailyTargetProfit=0.00000000
+inp_DailyMaxLoss=1500.00000000
+
+;=== 5. SLIPPAGE & LATENCY DEFENSE ===
+inp_MaxAllowedSlippagePoints=80.00000000
+inp_SlippageCooldownSeconds=300
+
+;=== 6. DYNAMIC AUTO-GMT & TIME FILTERS ===
+; Keeps Asian Tokyo liquidity (01:00-03:00) and London/US active. Only pauses during midnight rollover (23:00-01:00)
+inp_AutoGMT=true
+inp_ManualGMTOffset=2
+inp_DailyCloseHour=23
+inp_DailyReopenHour=1
+inp_FridayCloseHour=22
+inp_ClosePositionsOnFriday=true
+inp_DeletePendingsOnFriday=true
+
+;=== 7. MULTI-SOURCE NEWS SENTINEL (USD HIGH-IMPACT) ===
+inp_EnableNewsFilter=true
+inp_NewsMinutesBefore=15
+inp_NewsMinutesAfter=15
+inp_DeletePendingsOnNews=true
+inp_EnableForexFactory=true
+inp_EnableInvestingFallback=true
+
+;=== 8. INSTITUTIONAL HUD DASHBOARD ===
+inp_ShowPanel=true
+inp_PanelCorner=0
+inp_PanelX=15
+inp_PanelY=25
